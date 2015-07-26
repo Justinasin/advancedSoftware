@@ -1,0 +1,124 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Functions;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ *
+ * @author stavros
+ */
+public class otherUserProfile extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        // PrintWriter out = response.getWriter();
+        String url = "/otherUserProfile.jsp";
+        try {
+            /* TODO get username tou tupou pou 8es na deis kai fortwston
+             ap thn vash kai steil ton opws kaneis sto adminhandle*/
+
+            String username = request.getParameter("username");
+            System.out.println(username);
+
+            Connection connection = ConnPoolInit.ConnPoolInit.Datasource.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet set;
+            set = statement.executeQuery("SELECT * FROM Users WHERE username = "
+                    + username + " ");
+
+            if (set.next()) {
+                String name = set.getString(3);
+                String surname = set.getString(4);
+                String roles = set.getString(7);
+                String password = set.getString(2);
+                String email = set.getString(5);
+                String phone = set.getString(6);
+                String confirmed = set.getString(8);
+
+                request.setAttribute("username", username);
+                request.setAttribute("name", name);
+                request.setAttribute("surname", surname);
+                request.setAttribute("roles", roles);
+                request.setAttribute("password", password);
+                request.setAttribute("email", email);
+                request.setAttribute("phone", phone);
+                request.setAttribute("confirmed", confirmed);
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+
+        } finally {
+            // out.close();
+        }
+
+        RequestDispatcher dispatcher
+                = getServletContext().getRequestDispatcher(url);
+        dispatcher.forward(request, response);
+
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
+}

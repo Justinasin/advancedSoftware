@@ -1,0 +1,37 @@
+<%-- 
+    Document   : empty
+    Created on : Aug 6, 2014, 3:20:05 PM
+    Author     : john
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Contact Us Page</title>
+        <link rel="stylesheet" type="text/css" href="main.css" media="screen" />
+    </head>
+    <body >
+
+        <%@include file="navigationbar.jsp" %>
+
+        <div>
+            <h1>Contact us</h1>
+            <div>
+                <p>HouseGr Real Estate</p>
+                <p> Dimofontos 88<br>
+Tel: 00302107299370<br>
+Fax: 2107299371<br>
+Email:<a href="#"> info@dwsmou.gr </a><br>
+Contact: Koutoulakis Ioannis<br>
+Mobile: 6978626757<br>
+Contact: Petsalakis Stauros<br>
+Mobile: 6978637255<br></p>
+            </div>
+        </div>
+        <%@include file="footer.jsp" %>
+    </body>
+
+
+</html>

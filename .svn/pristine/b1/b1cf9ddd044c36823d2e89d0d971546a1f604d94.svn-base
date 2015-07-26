@@ -1,0 +1,77 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Functions;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
+/**
+ *
+ * @author stavros
+ */
+public class evaluation_methods {
+
+    protected ArrayList<houseInstance> SAW(ArrayList<houseInstance> houselist,String priceFrom,String priceTo,String priceWeight
+                ,String region,String regionWeight,String floor_area_from,String floor_area_to,String floor_area_weight
+                ,String houseType,String houseTypeWeight,String floorDetachedFrom,String floorDetachedTo,String floorDetachedWeight
+                ,String floorApartmentFrom,String floorApartmentTo,String floorApartmentWeight,String publicPayFrom
+                ,String publicPayTo,String publicPayWeight,String yearOfConstructionFrom,String yearOfConstructionTo
+                ,String yearOfConstructionWeight,String heatType,String heatTypeWeight) {
+            
+        Collections.sort(houselist,new sawsorter());
+        
+        return houselist;
+    }
+
+    protected ArrayList<houseInstance> TOPSIS(ArrayList<houseInstance> houselist,String priceFrom,String priceTo,String priceWeight
+                ,String region,String regionWeight,String floor_area_from,String floor_area_to,String floor_area_weight
+                ,String houseType,String houseTypeWeight,String floorDetachedFrom,String floorDetachedTo,String floorDetachedWeight
+                ,String floorApartmentFrom,String floorApartmentTo,String floorApartmentWeight,String publicPayFrom
+                ,String publicPayTo,String publicPayWeight,String yearOfConstructionFrom,String yearOfConstructionTo
+                ,String yearOfConstructionWeight,String heatType,String heatTypeWeight) {
+        
+        Collections.sort(houselist,new topsissorter());
+        
+        
+
+        return houselist;
+
+    }
+    
+    static houseInstance findmax(ArrayList<houseInstance> houselist){
+        houseInstance max=new houseInstance();
+        max.price = Integer.toString(0);
+        max.floor = Integer.toString(0);
+        max.size_in_sq_m = Integer.toString(0);
+        max.public_pay = Integer.toString(0);
+        max.yearOfConstRenov = Integer.toString(0);
+        for(houseInstance house : houselist)
+        {
+            if(Integer.parseInt(house.price)>Integer.parseInt(max.price))
+                max.price = house.price;
+            if(Integer.parseInt(house.floor)>Integer.parseInt(max.floor))
+                max.floor = house.floor;
+            if(Integer.parseInt(house.size_in_sq_m)>Integer.parseInt(max.size_in_sq_m))
+                max.size_in_sq_m = house.size_in_sq_m;
+            if(Integer.parseInt(house.public_pay)>Integer.parseInt(max.public_pay))
+                max.public_pay = house.public_pay;
+            if(Integer.parseInt(house.yearOfConstRenov)>Integer.parseInt(max.yearOfConstRenov))
+                max.yearOfConstRenov = house.yearOfConstRenov;
+        }
+        
+        return max;
+    }
+    
+    houseInstance findbest(ArrayList<houseInstance> houselist){
+        
+        return null;
+    }
+    
+    houseInstance findworst(ArrayList<houseInstance> houselist){
+        return null;
+    }
+
+}

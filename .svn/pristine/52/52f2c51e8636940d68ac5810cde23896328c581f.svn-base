@@ -1,0 +1,463 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Aug 4, 2014, 10:12:16 PM
+    Author     : stavros
+*/
+#container{
+
+/*        box-shadow: 0px 0px 3px #3366FF;
+        border-radius:7px 7px 7px 7px;
+        border-style: groove;
+        border-width:10px;
+        border-color: #CCC;
+        border-right-color:#666666;*/
+    font-family: 'Open Sans', Helvetica, sans-serif;
+
+    font-size:14px;
+    min-height:650px;
+    width:990px;
+    padding:5px;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top: 30px;
+    margin-bottom:30px;
+}
+
+#search_houses table{
+    border: none;
+    width:50%;
+}
+
+
+.header
+{
+    width:983px;
+    /*font-family: "Helvetica",  sans-serif;*/
+    font-size:14px;
+    position:absolute;
+    height: 100px;
+}
+body
+{   
+    background-image: url('img/bl_soft1.jpg');
+    background-repeat: repeat;
+    font-family: 'Open Sans', Helvetica, sans-serif;
+    background-color: #e8e8e8;
+    margin:auto;
+    height:100%;
+    width:983px;
+}
+.mainbody
+{
+    position:absolute;
+    top:200px;
+    margin-top: 50px;
+    padding-bottom: 200px;
+    min-height:250px;
+    width:983px;
+}
+
+
+.footer
+{
+    position:fixed;
+    bottom:0;
+    width:983px;
+    padding: 2px;
+    background-color: #333333;
+    color: whitesmoke;
+}
+
+
+
+
+.adminresults
+{
+    margin-left: 250px;
+    margin-top: 50px;
+}
+
+/*
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}*/
+
+th,td {
+    padding: 2px;
+}
+/*
+#search_houses tr:nth-child(even) {
+background-color: #d0d0d0;
+}*/
+
+
+#inbox table{
+    float:right;
+    width: 60%;
+    border-collapse: separate;
+    border-spacing: 10px 20px;
+}
+#inbox tr td{
+    background: rgb(54, 25, 25); /* Fall-back for browsers that don't support rgba */
+    background: rgba(255, 255, 255, .5);
+    border-radius:10px;
+}
+
+	table{
+		border-collapse:collapse; 
+	}
+	#search_houses td{
+		padding:7px;
+                //border:#4e95f4 1px solid;
+	}
+        #search_houses_div, #descOfTopTenPreferedHouses, #sidebar, #myhouses,#insert_house{
+            //opacity: 0.3;
+            background: rgb(54, 25, 25); /* Fall-back for browsers that don't support rgba */
+            background: rgba(54, 25, 25, .23);
+            //background-color: #d0d0d0;
+            border-radius:10px;
+        }
+	/* improve visual readability for IE8 and below */
+/*	table tr{
+		background: #b8d1f3;
+	}*/
+	/*  Define the background color for all the ODD table columns  */
+/*	table tr td:nth-child(odd){ 
+		background: #b8d1f3;
+	}*/
+/*	  Define the background color for all the EVEN table columns  
+	table tr td:nth-child(even){
+		background: #dae5f4;
+	}*/
+
+
+
+
+
+
+#map_canvas {
+    width: 500px;
+    height: 400px;
+    background-color: #CCC;
+
+}
+
+
+
+#header {
+    width:983px;
+    /*font-family: "Helvetica",  sans-serif;*/
+    font-size:14px;
+}
+
+#logo{
+
+    height:130px;
+    width:670px;
+    float:left;
+    margin-bottom:25px;
+}
+
+
+
+#navigation{
+    //background-color: #EEEEEE;
+    //box-shadow: 0 6px 6px #AAAAAA;
+    margin-bottom: 0.7em;
+    //    padding: 13px 0 11px;
+    width: 100%;
+    clear:both;
+    height:33px;
+
+}
+#navigation ul
+{
+    margin:0px; 
+    padding:0px;
+}
+
+
+#navigation ul li
+{display:inline;
+ height:30px;
+ float:left;
+ list-style:none;
+ margin-left:0px;
+ float:left;
+ font-size:15px;
+ padding-top:0px;
+ padding-left:0px;
+ padding-right:0px;
+ font-weight:bold;
+ font-style:normal;
+ text-align:center;
+}
+
+
+#signupcontainer{
+    padding: 30px;
+
+}
+
+
+#header {
+    width:983px;
+    height:150px;
+    /*font-family: "Helvetica",  sans-serif;*/
+    font-size:14px;
+}
+
+
+#logo{
+
+    height:130px;
+    width:670px;
+    float:left;
+    margin-bottom:25px;
+}
+#navigation{
+    //background-color: #EEEEEE;
+    //box-shadow: 0 6px 6px #AAAAAA;
+    margin-bottom: 0.7em;
+    //    padding: 13px 0 11px;
+    width: 100%;
+    clear:both;
+    height:33px;
+
+}
+#navigation ul
+{
+    margin:0px; 
+    padding:0px;
+}
+
+
+#navigation ul li
+{display:inline;
+ height:30px;
+ float:left;
+ list-style:none;
+ margin-left:0px;
+ float:left;
+ font-size:15px;
+ padding-top:0px;
+ padding-left:0px;
+ padding-right:0px;
+ font-weight:bold;
+ font-style:normal;
+ text-align:center;
+}
+
+.topbarlink{
+}
+
+.topbarlink:hover{
+}
+
+
+
+
+
+
+
+
+#image_logo{
+    width:355px;
+    height:120px;
+    float:left;
+    margin-left:5px;
+    margin-top:5px;
+}
+
+#login,#logout{
+    /*font-family: "Helvetica",  sans-serif;*/
+    font-size:14px;
+    float:right;
+    width:300px;
+}
+
+
+.field_names {
+    /*font-family: "Helvetica",  sans-serif;*/
+    float:left;
+    font-size:14px;
+    padding-top:2px;
+    padding-bottom:5px;
+}
+
+
+
+#login fieldset {
+    height:105px;
+}
+
+.input{
+    /*font-family:"Helvetica",  sans-serif;*/
+    border-radius:5px 5px 5px 5px;
+    text-align:left;
+    width:140px;
+    height:16px;
+    font-size:14px;
+}
+
+.submit{
+    /*font-family:"Helvetica",  sans-serif;*/
+    /*border-radius:5px 5px 5px 5px;*/
+    text-align:center;
+    width:80px;
+    height:25px;
+    font-size:14px;
+}
+
+
+
+#sidebar{
+    float:left;
+    margin: 25px;
+    margin-top: 30px;
+    margin-left: 0;
+    //    margin-right: 25px;
+    //    margin-left: 25px;
+    padding-right: 5px;
+    //background-color: #AAA;
+   // border-radius:7px 7px 7px 7px;
+    //border-style: groove;
+   // border-width:1px;
+    //border-color: #CCC;
+    //border-right-color:#666666;
+}
+#sidebar ul{
+    padding-left:15px;
+    list-style-type: none;
+
+}
+
+
+#sidebar ul li ul{
+    padding-left: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.more {
+    display: none;
+    //	border-top: 1px solid #666;
+    //	border-bottom: 1px solid #666; 
+}
+a.showLink, a.hideLink {
+    text-decoration: none;
+}
+
+
+
+#cssmenu,
+#cssmenu ul,
+#cssmenu ul li,
+#cssmenu ul li a {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  list-style: none;
+  line-height: 1;
+  display: block;
+  position: relative;
+font-family:"Helvetica",  sans-serif
+}
+#cssmenu {
+  width: 100%;
+  height: 59px;
+  padding-bottom: 4px;
+  float:left;
+}
+#cssmenu.align-right {
+  float: right;
+}
+#cssmenu.align-right ul li {
+  float: right;
+  margin-right: 0;
+  margin-left: 4px;
+}
+#cssmenu.align-right ul li:first-child,
+#cssmenu.align-right ul li:first-child > a {
+  border-bottom-right-radius: 3px;
+}
+#cssmenu #bg-one,
+#cssmenu #bg-two,
+#cssmenu #bg-three,
+#cssmenu #bg-four {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+#cssmenu #bg-one {
+  height: 10px;
+  background: #0f71ba;
+}
+#cssmenu #bg-two {
+  height: 59px;
+  z-index: 2;
+  background: url('img/bg.png');
+}
+#cssmenu #bg-three {
+  bottom: 4px;
+  height: 55px;
+  z-index: 3;
+  background: #222222;
+  background: -moz-linear-gradient(top, #555555 0%, #222222 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #555555), color-stop(100%, #222222));
+  background: -webkit-linear-gradient(top, #555555 0%, #222222 100%);
+  background: -o-linear-gradient(top, #555555 0%, #222222 100%);
+  background: -ms-linear-gradient(top, #555555 0%, #222222 100%);
+  background: linear-gradient(to bottom, #555555 0%, #222222 100%);
+}
+#cssmenu #bg-four {
+  bottom: 4px;
+  height: 55px;
+  z-index: 4;
+  background: url('img/bg.png');
+}
+#cssmenu ul {
+  height: 59px;
+}
+#cssmenu ul li {
+  float: left;
+  margin-right: 4px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  z-index: 5;
+}
+#cssmenu ul li a {
+  padding: 24px 30px 20px 30px;
+  margin-bottom: 4px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  color: #eeeeee;
+  font-size: 15px;
+  text-decoration: none;
+}
+#cssmenu ul li:first-child,
+#cssmenu ul li:first-child > a {
+  border-bottom-left-radius: 3px;
+}
+#cssmenu ul li:hover,
+#cssmenu ul li.active {
+  background: #0f71ba;
+  background: -moz-linear-gradient(top, #3fa4f0 0%, #0f71ba 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #3fa4f0), color-stop(100%, #0f71ba));
+  background: -webkit-linear-gradient(top, #3fa4f0 0%, #0f71ba 100%);
+  background: -o-linear-gradient(top, #3fa4f0 0%, #0f71ba 100%);
+  background: -ms-linear-gradient(top, #3fa4f0 0%, #0f71ba 100%);
+  background: linear-gradient(to bottom, #3fa4f0 0%, #0f71ba 100%);
+}
+#cssmenu ul li a:hover,
+#cssmenu ul li.active > a {
+  background: url('img/bg.png');
+  color: #ffffff;
+}

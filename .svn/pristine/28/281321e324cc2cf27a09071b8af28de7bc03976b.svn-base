@@ -1,0 +1,563 @@
+<%--
+    Document   : buyer_renter
+    Created on : Sep 2, 2014, 2:01:33 AM
+    Author     : john
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="Functions.database_common_functions"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>House search page</title>
+        <link rel="stylesheet" type="text/css" href="main.css" media="screen" />
+        <script type="text/javascript" src="javascript/jquery-1.10.2.js"></script>
+        <script type="text/javascript" src="javascript/buyer_renter.js">var externalScriptLoaded = false;</script>
+
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRTNlfYzmHv1rvuWZ2ipH0F6HcQQD1RP4"></script>
+        <script type="text/javascript">
+            var markersArray = [];
+
+            function clearOverlays() {
+                for (var i = 0; i < markersArray.length; i++) {
+                    markersArray[i].setMap(null);
+                }
+                markersArray.length = 0;
+            }
+
+            function init_map() {
+
+                var myOptions = {
+                    zoom: 9,
+                    center: new google.maps.LatLng(37.97882854132278, 23.73069785156258),
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+
+                map = new google.maps.Map(document.getElementById("gmap_canvas"), myOptions);
+
+
+
+
+
+            }
+
+            function populateMap() {
+
+                clearOverlays();
+                var url = "search_houses_buyer_renter?sale-Rent=" + document.getElementById("sale-Rent").value
+                        + "&from_price=" + document.getElementById("from_price").value
+                        + "&to_price=" + document.getElementById("to_price").value
+                        + "&weight_price_range=" + document.getElementById("weight_price_range").value
+                        + "&selectRegion1=" + document.getElementById("selectRegion1").value
+                        + "&weight_region-state=" + document.getElementById("weight_region-state").value
+                        + "&from_floor_area=" + document.getElementById("from_floor_area").value
+                        + "&to_floor_area=" + document.getElementById("to_floor_area").value
+                        + "&weight_floor_area=" + document.getElementById("weight_floor_area").value
+                        + "&house_type_search_house=" + document.getElementById("house_type_search_house").value
+                        + "&weight_type_of_house=" + document.getElementById("weight_type_of_house").value
+                        + "&floorfrom=" + document.getElementById("floorfrom").value
+                        + "&floorto=" + document.getElementById("floorto").value
+                        + "&weight_floor_of_house=" + document.getElementById("weight_floor_of_house").value
+                        + "&floorfrom2=" + document.getElementById("floorfrom2").value
+                        + "&floorto2=" + document.getElementById("floorto2").value
+                        + "&weight_floor_of_house2=" + document.getElementById("weight_floor_of_house2").value
+                        + "&from_koin_dapan=" + document.getElementById("from_koin_dapan").value
+                        + "&to_koin_dapan=" + document.getElementById("to_koin_dapan").value
+                        + "&weight_koin_dapan=" + document.getElementById("weight_koin_dapan").value
+                        + "&from_etos_kataskeuhs=" + document.getElementById("from_etos_kataskeuhs").value
+                        + "&to_etos_kataskeuhs=" + document.getElementById("to_etos_kataskeuhs").value
+                        + "&weight_etos_kataskeuhs=" + document.getElementById("weight_etos_kataskeuhs").value
+                        + "&heatType=" + document.getElementById("heatType").value
+                        + "&weight_type_of_heat=" + document.getElementById("weight_type_of_heat").value
+                        + "&select_algorithm=" + document.getElementById("select_algorithm").value;
+
+                $.getJSON(url, function(data) {
+
+
+                    //tableCreate();
+
+                    var body = document.getElementById('descOfTopTenPreferedHouses');
+                    body.innerHTML = "<h1>Results:</h1>";
+                    var tbl = document.createElement('table');
+                    var tbdy = document.createElement('tbody');
+
+                    for (var i = 0, len = data.length; i < len; i++) {
+                        /************************
+                         *EDW EXOUME OLES TIS PLHROFORIES GIA OLA To TOP 10 SPITIWN,KAI MPOROUME
+                         *NA TA XWSOUME OpouDHPOTE 3eRW GW , SE KANA PLAINO DIV KAI KALA EPEIDH ZHTAEI LISTA
+                         *STA DE3iA O TUPOS STHN EKFWNHSH
+                         *********************/
+                        //alert("mphke sthn for me date[i].owner_username= " + data[i].owner_username);
+                        var houseId = data[i].idEstates;
+                        var houseOwner = data[i].owner_username;
+
+                        var tr = document.createElement('tr');
+                        var td = document.createElement('td');
+                        var a = document.createElement('a');
+
+                        a.setAttribute('href', 'Estateprofile.jsp?houseId=' + houseId + '&houseOwner=' + houseOwner);
+
+                        a.appendChild(document.createTextNode("House #" + data[i].idEstates));
+                        td.appendChild(a);
+                        tr.appendChild(td);
+                        td = document.createElement('td');
+                        td.appendChild(document.createTextNode("Price : " + data[i].price + "e \n Short description: " + data[i].description));
+                        if(i+1<len){
+                            td.appendChild(document.createElement("hr"));
+                        }
+                        tr.appendChild(td);
+                        tbdy.appendChild(tr);
+
+
+
+                        var mapDesc = "Price : " + data[i].price + " euros</br>Location : " + data[i].location + ", " + data[i].Region +
+                                "</br> Type : " + data[i].type_of_estate + "</br>Size : " + data[i].size_in_sq_m +
+                                " m<sup>2</sup></br>  Heat : " + data[i].type_of_heat + "</br>Short description: " + data[i].description + "</br>";
+                        var latlng = new google.maps.LatLng(data[i].latitude, data[i].longitude);
+                        var mapTitle = "House of " + data[i].owner_username;
+                        var infoOpenDefault = false;
+                        var dragAble = false;
+                        var removable = false;
+                        var iconPath = "img/house_marker.png";
+                        //alert("paei na mpei sthn create marker!!");
+                        create_marker(latlng, mapTitle, mapDesc, infoOpenDefault, dragAble, removable, iconPath, houseId, houseOwner);
+                        //alert("bghke ap thn create marker!!");
+                    }
+
+                    tbl.appendChild(tbdy);
+                    body.appendChild(tbl);
+                    //alert("bghke apo thn getJson");
+
+
+
+
+                });
+
+
+
+            }
+            function create_marker(MapPos, MapTitle, MapDesc, InfoOpenDefault, DragAble, Removable, iconPath, houseId, houseOwner)
+            {
+                //new marker
+                //alert("Mphke sthn create_marker!!");
+                var marker1 = new google.maps.Marker({
+                    position: MapPos,
+                    map: map,
+                    draggable: DragAble,
+                    animation: google.maps.Animation.DROP,
+                    title: "house",
+                    icon: iconPath
+                });
+                markersArray.push(marker1);
+                //Content structure of info Window for the Markers
+                var contentString = $('<div class="marker-info-win">' +
+                        '<div class="marker-inner-win"><span class="info-content">' +
+                        '<h3 class="marker-heading">' + MapTitle + '</h3>' +
+                        MapDesc +
+                        '</span><button name="remove-marker" class="remove-marker" title="Remove Marker">Go to house page</button>' +
+                        '</br></br></div></div>');
+
+
+                //Create an infoWindow
+                var infowindow1 = new google.maps.InfoWindow();
+                //set the content of infoWindow
+                infowindow1.setContent(contentString[0]);
+
+                //Find remove button in infoWindow
+                var removeBtn = contentString.find('button.remove-marker')[0];
+
+                //Find save button in infoWindow
+                //var saveBtn = contentString.find('button.save-marker')[0];
+
+                //add click listner to remove marker button
+                google.maps.event.addDomListener(removeBtn, "click", function(event) {
+                    //call remove_marker function to remove the marker from the map
+                    go_to_house_page(marker1, houseId, houseOwner);
+                });
+
+
+
+                //add click listner to save marker button
+                google.maps.event.addListener(marker1, 'click', function() {
+                    infowindow1.open(map, marker1); // click on marker opens info window
+                });
+
+                if (InfoOpenDefault) //whether info window should be open by default
+                {
+                    infowindow1.open(map, marker);
+                }
+            }
+            /************************END OF CREATE MARKER*********************************************/
+
+            /*****************************************DELETE MARKER*********************************/
+            //############### Remove Marker Function ##############
+            function go_to_house_page(Marker, houseId, houseOwner)
+            {
+                /* determine whether marker is draggable
+                 new markers are draggable and saved markers are fixed */
+                if (Marker.getDraggable()) //den einai draggable ara einai ap ta spitia sthn bash
+                {
+                    //EDW 8a se phgainei sthn selida tou spitiou me id=houseID kai idiokthth=houseOwner
+                    alert("remove_marker :mphke sto marker draggable/la8os gia spitia pou anhkoun hdh sthn bash!");
+
+                    //Marker.setMap(null); //just remove new marker
+                }
+                else
+                {
+                    window.location = 'Estateprofile.jsp?houseId=' + houseId + '&houseOwner=' + houseOwner;
+                }
+            }
+            google.maps.event.addDomListener(window, 'load', init_map);
+        </script>
+
+
+
+
+    </head>
+
+    <body>
+        <%@include file="navigationbar.jsp" %>
+
+
+        <div id="gmap_canvas" style="height:400px;width:500px;background-color: #CCC;"></div>
+
+        <table>
+            <tr>
+                <td>
+
+                    <h3>Please Insert your house preferences here:</h3>
+
+                    <p style: color="red" size="8px"> Importance factor = 1 low, 5 high</p>
+                    <div id="search_houses_div">
+                        <form id='search_houses' name='search_houses' method="get" action="search_houses_buyer_renter" onsubmit="return popup2('<%= (String) session.getAttribute("role")%>')"  >
+                            <table>
+                                <%
+                                    String role = (String) session.getAttribute("role");
+
+                                %>
+                                <tr>
+                                    <td>
+                                        What would you like to do?
+                                    </td>
+                                    <td>
+
+                                        <%                                            if (role == null) { %>
+                                        <select name='sale-Rent' id='sale-Rent' onchange="tarxidiamkounh8hkan()">
+                                            <option value='BOTH' selected>Rent and Buy</option>
+                                            <option value='FOR RENT' >Rent</option>
+                                            <option value='FOR SALE'>Buy</option>
+                                        </select>
+                                        <% } else if (database_common_functions.isRenter(role) && !database_common_functions.isBuyer(role)) {%>
+                                        <select name='sale-Rent' id='sale-Rent' disabled="true" >
+                                            <option value='BOTH' >Rent and Buy</option>
+                                            <option value='FOR RENT' selected  >Rent</option>
+                                            <option value='FOR SALE'>Buy</option>
+                                        </select>
+                                        <%} else if (database_common_functions.isBuyer(role) && !database_common_functions.isRenter(role)) {%>
+                                        <select name='sale-Rent' id='sale-Rent' disabled="true" >
+                                            <option value='BOTH' >Rent and Buy</option>
+                                            <option value='FOR RENT' >Rent</option>
+                                            <option value='FOR SALE' selected >Buy</option>
+                                        </select>
+                                        <% } else { %>
+                                        <select name='sale-Rent' id='sale-Rent' onchange="tarxidiamkounh8hkan()">
+                                            <option value='BOTH' selected>Rent and Buy</option>
+                                            <option value='FOR RENT' >Rent</option>
+                                            <option value='FOR SALE'>Buy</option>
+                                        </select>
+                                        <% }%>
+
+                                    </td>
+                                    <td>
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        Price range from:
+                                    </td>
+                                    <td>
+                                        <input type="text" id="from_price" name="from_price" value="" class="input" onchange="validate_number('from_price', 'tdto_priceid')" >
+                                    </td>
+                                    <td>
+                                        to:
+                                    </td>
+                                    <td>
+                                        <input type="text" id="to_price" name="to_price" value="" class="input" onchange="validate_number('to_price', 'tdto_priceid')" >
+                                    </td>
+                                    <td>
+                                        Importance factor:
+                                    </td>
+                                    <td>
+                                        <select name='weight_price_range' id="weight_price_range">
+                                            <option value='1'>1</option>
+                                            <option value='2'>2</option>
+                                            <option value='3' selected>3</option>
+                                            <option value='4'>4</option>
+                                            <option value='5'>5</option>
+                                        </select>
+                                    </td>
+                                    <td id="tdto_priceid"  style="color:red"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Region/State:
+                                    </td>
+                                    <td>
+                                        <select name='selectRegion1' id="selectRegion1">
+                                            <option value='ALL' selected>All</option>
+                                            <option value='Thraki'>Thraki</option>
+                                            <option value='Macedonia'>Macedonia</option>
+                                            <option value='Ipiros'>Ipiros</option>
+                                            <option value='Thessalia'>Thessalia</option>
+                                            <option value='Sterea Ellada'>Sterea Ellada</option>
+                                            <option value='Evia'>Evia</option>
+                                            <option value='Pelloponisos'>Pelloponisos</option>
+                                            <option value='Krhth'>Krhth</option>
+                                            <option value='Sporades'>Sporades</option>
+                                            <option value='Kuklades'>Kuklades</option>
+                                            <option value='Eptanisa'>Eptanisa</option>
+                                            <option value='Dwdekanisa'>Dwdekanisa</option>
+                                            <option value='Attiki'>Attiki</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        Importance factor:
+                                    </td>
+                                    <td>
+                                        <select name='weight_region-state' id="weight_region-state">
+                                            <option value='1'>1</option>
+                                            <option value='2'>2</option>
+                                            <option value='3' selected>3</option>
+                                            <option value='4'>4</option>
+                                            <option value='5'>5</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>
+                                        m<sup>2</sup> From:
+                                    </td>
+                                    <td>
+                                        <input type="text" id="from_floor_area" name="from_floor_area" value="" class="input" onchange="validate_number('from_floor_area', 'td_floor_area_id')">
+                                    </td>
+                                    <td>
+                                        To:
+                                    </td>
+                                    <td>
+                                        <input type="text" id="to_floor_area" name="to_floor_area" value="" class="input" onchange="validate_number('to_floor_area', 'td_floor_area_id')">
+                                    </td>
+                                    <td>
+                                        Importance factor:
+                                    </td>
+                                    <td>
+                                        <select name='weight_floor_area' id="weight_floor_area">
+                                            <option value='1'>1</option>
+                                            <option value='2'>2</option>
+                                            <option value='3' selected>3</option>
+                                            <option value='4'>4</option>
+                                            <option value='5'>5</option>
+                                        </select>
+                                    </td>
+                                    <td id="td_floor_area_id" style="color:red"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        House type:
+                                    </td>
+                                    <td>
+                                        <select name='house_type_search_house' id='house_type_search_house' onchange="showFloorsSearchHouse()">
+                                            <option value='apartment' >Apartment</option>
+                                            <option value='detached house'>Detached house</option>
+                                            <option value='BOTH' selected>Both</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        Importance factor:
+                                    </td>
+                                    <td>
+                                        <select name='weight_type_of_house' id='weight_type_of_house'>
+                                            <option value='1'>1</option>
+                                            <option value='2'>2</option>
+                                            <option value='3' selected>3</option>
+                                            <option value='4'>4</option>
+                                            <option value='5'>5</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                    </td>
+
+                                </tr>
+                                <tr id="floors_in_detached_house" name="floors_in_detached_house" class="more" style="display: table-row" >
+                                    <td>
+                                        <div id='floorMessage_search_house' name="floorMessage_search_house">Floors in detached house, from:</div>
+                                    </td>
+
+                                    <td>
+                                        <input type="text" id="floorfrom" name="floorfrom" value="" class="input" onchange="validate_number('floorfrom', 'tdto_floorsfloorsid')">
+                                    </td>
+                                    <td>
+                                        to :
+                                    </td>
+                                    <td>
+                                        <input type="text" id="floorto" name="floorto" value="" class="input" onchange="validate_number('floorto', 'tdto_floorsfloorsid')">
+                                    </td>
+                                    <td>
+                                        Importance factor:
+                                    </td>
+                                    <td>
+                                        <select name='weight_floor_of_house' id="weight_floor_of_house">
+                                            <option value='1'>1</option>
+                                            <option value='2'>2</option>
+                                            <option value='3' selected>3</option>
+                                            <option value='4'>4</option>
+                                            <option value='5'>5</option>
+                                        </select>
+                                    </td>
+                                    <td id="tdto_floorsfloorsid" style="color:red"></td>
+                                </tr>
+                                <tr id='floor_in_apartment' name="floor_in_apartment" class="more" style="display: table-row">
+                                    <td>
+                                        <div id='floorMessage_search_house2' name="floorMessage_search_house2">Apartment floor from:</div>
+                                    </td>
+
+                                    <td>
+                                        <input type="text" id="floorfrom2" name="floorfrom2" value="" class="input" onchange="validate_number('floorfrom2', 'tdto_floorsfloorsid2')">
+                                    </td>
+                                    <td>
+                                        to :
+                                    </td>
+                                    <td>
+                                        <input type="text" id="floorto2" name="floorto2" value="" class="input" onchange="validate_number('floorto2', 'tdto_floorsfloorsid2')">
+                                    </td>
+                                    <td>
+                                        Importance factor:
+                                    </td>
+                                    <td>
+                                        <select name='weight_floor_of_house2' id="weight_floor_of_house2">
+                                            <option value='1'>1</option>
+                                            <option value='2'>2</option>
+                                            <option value='3' selected>3</option>
+                                            <option value='4'>4</option>
+                                            <option value='5'>5</option>
+                                        </select>
+                                    </td>
+                                    <td id="tdto_floorsfloorsid2" style="color:red"></td>
+                                </tr>
+                                <tr>
+
+                                    <td>
+                                        Public pay per month (apartment) from:
+                                    </td>
+                                    <td>
+                                        <input type="text" id="from_koin_dapan" name="from_koin_dapan" value=""  class="input" onchange="validate_number('from_koin_dapan', 'td_koin_dapanaasss_id')">
+                                    </td>
+                                    <td>
+                                        to:
+                                    </td>
+                                    <td>
+                                        <input type="text" id="to_koin_dapan" name="to_koin_dapan" value=""  class="input" onchange="validate_number('to_koin_dapan', 'td_koin_dapanaasss_id')">
+                                    </td>
+                                    <td>
+                                        Importance factor:
+                                    </td>
+                                    <td>
+                                        <select name='weight_koin_dapan' id="weight_koin_dapan"  >
+                                            <option value='1'>1</option>
+                                            <option value='2'>2</option>
+                                            <option value='3' selected>3</option>
+                                            <option value='4'>4</option>
+                                            <option value='5'>5</option>
+                                        </select>
+                                    </td>
+                                    <td id="td_koin_dapanaasss_id" style="color:red"></td>
+
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Year of construction/renovation from:
+                                    </td>
+                                    <td>
+                                        <input type="text" id="from_etos_kataskeuhs" name="from_etos_kataskeuhs" value="" class="input" onchange="validate_year('from_etos_kataskeuhs', 'td_etos_kataskeuhsed_id')">
+                                    </td>
+                                    <td>
+                                        to:
+                                    </td>
+                                    <td>
+                                        <input type="text" id="to_etos_kataskeuhs" name="to_etos_kataskeuhs" value="" class="input" onchange="validate_year('to_etos_kataskeuhs', 'td_etos_kataskeuhsed_id')">
+                                    </td>
+                                    <td>
+                                        Importance factor:
+                                    </td>
+                                    <td>
+                                        <select name='weight_etos_kataskeuhs' id="weight_etos_kataskeuhs">
+                                            <option value='1'>1</option>
+                                            <option value='2'>2</option>
+                                            <option value='3' selected>3</option>
+                                            <option value='4'>4</option>
+                                            <option value='5'>5</option>
+                                        </select>
+                                    </td>
+                                    <td id="td_etos_kataskeuhsed_id" style="color:red"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Type of heat:
+                                    </td>
+                                    <td>
+                                        <select name='heatType' id="heatType">
+                                            <option value='central' >central</option>
+                                            <option value='independent'>independent</option>
+                                            <option value='BOTH' selected>Both</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        Importance factor:
+                                    </td>
+                                    <td>
+                                        <select name='weight_type_of_heat' id="weight_type_of_heat">
+                                            <option value='1'>1</option>
+                                            <option value='2'>2</option>
+                                            <option value='3' selected>3</option>
+                                            <option value='4'>4</option>
+                                            <option value='5'>5</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>Search Algorithm:</td>
+                                    <td>
+                                        <select name='select_algorithm' id="select_algorithm">
+                                            <option value='saw' selected>SAW</option>
+                                            <option value='topsis'>TOPSIS</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                    </td>
+
+                                </tr>
+                            </table>
+
+                            <input type="submit" value="Search" >
+
+                        </form>
+                    </div>
+                </td>
+                <td>
+                    <div id="descOfTopTenPreferedHouses"></div>
+                </td>
+            </tr>
+        </table>
+
+        <%@include file="footer.jsp" %>
+
+    </body>
+</html>

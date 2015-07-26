@@ -1,0 +1,22 @@
+<%-- 
+    Document   : home
+    Created on : Jun 12, 2014, 11:36:12 PM
+    Author     : stavros
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Home Page</title>
+        <link rel="stylesheet" type="text/css" href="main.css" media="screen" />
+    </head>
+    <body>
+        <%@include file="navigationbar.jsp" %>
+
+        <h1>Hello kaula!</h1>
+        <%@include file="footer.jsp" %>
+
+    </body>
+</html>

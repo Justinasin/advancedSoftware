@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context antiJARLocking="true" path="/HouseGr">
+  <Resource name="jdbc/TedDB" auth="Container" driverClassName="com.mysql.jdbc.Driver" 
+        maxActive="150" maxIdle="300" maxWait="10000" username="root" password="root" 
+        type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/TedDB" />
+</Context>
